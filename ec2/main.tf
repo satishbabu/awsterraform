@@ -7,4 +7,10 @@ resource "aws_instance" "ec2" {
     instance_type = "t2.micro"
 }
 
+resource "aws_eip" "eip" {
+  instance = aws_instance.ec2.id
+}
 
+output "eipoutput" {
+    value = aws_eip.eip.public_ip
+}
