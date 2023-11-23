@@ -13,9 +13,9 @@ pipeline {
         stage("plan") {
             steps {
                 echo 'In Plan...'
-                sh 'pwd;cd ec2/ ; terraform init'
-                sh 'pwd;cd ec2/ ; terraform plan -out tfplan'
-                sh 'pwd;cd ec2/ ; terraform show -no-color tfplan > tfplan.txt'
+                sh 'pwd;cd web-app-server/ ; terraform init'
+                sh 'pwd;cd web-app-server/ ; terraform plan -out tfplan'
+                sh 'pwd;cd web-app-server/ ; terraform show -no-color tfplan > tfplan.txt'
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     echo 'Approval....'
-                    def plan = readFile 'ec2/tfplan.txt'
+                    def plan = readFile 'web-app-server/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                 }
@@ -39,7 +39,7 @@ pipeline {
         stage("Apply") {
             steps {
                 echo 'Apply...'
-                sh "pwd; cd ec2/; terraform apply -input=false tfplan"
+                sh "pwd; cd web-app-server/; terraform apply -input=false tfplan"
             }
         }
     }
