@@ -19,15 +19,24 @@ pipeline {
             }
         }
 
-        stage("test") {
+        stage("Approval") {
+            when {
+                not {
+                    equals expected: true, actual: params.autoApprove
+                }
+            }
+            
             steps {
-                echo 'testing the application....'
+                echo 'Approval....'
+                def plan = readFile 'ec2/tfplan.txt'
+                input message: "Do you want to apply the plan",
+                    parameters: [text(name: 'Plan', description: "Please review the plan', defaultValue: plan)
             }
         }
 
-        stage("deploy") {
+        stage("Apply") {
             steps {
-                echo 'deploying the application....'
+                echo 'Apply...'
             }
         }
     }
