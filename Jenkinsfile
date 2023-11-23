@@ -9,11 +9,13 @@ pipeline {
     }
 
     agent any
-
     stages {
-        stage("build") {
+        stage("plan") {
             steps {
-                echo 'building the application......'
+                echo 'In Plan...'
+                sh 'pwd;cd ec2/ ; terraform init'
+                sh 'pwd;cd ec2/ ; terraform plan -out tfplan'
+                sh 'pwd;cd ec2/ ; terraform show -no-colr tfplan > tfplan.txt'
             }
         }
 
