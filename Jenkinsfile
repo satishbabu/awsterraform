@@ -29,8 +29,8 @@ pipeline {
             steps {
                 echo 'Approval....'
                 def plan = readFile 'ec2/tfplan.txt'
-                input message: "Do you want to apply the plan",
-                    parameters: [text(name: 'Plan', description: "Please review the plan', defaultValue: plan)
+                input message: "Do you want to apply the plan?",
+                parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)
             }
         }
 
