@@ -39,6 +39,7 @@ pipeline {
         stage("Apply") {
             steps {
                 echo 'Apply...'
+                sh "pwd; cd ec2/; terraform apply -input=false tfplan"
             }
         }
     }
