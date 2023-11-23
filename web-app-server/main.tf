@@ -36,7 +36,7 @@ variable "egress" {
 }
 
 resource "aws_security_group" "web_traffic" {
-    name = "Allow Web Traffic"
+    name = "Allow Web Traffic to Web Server"
 
     dynamic "ingress" {
         iterator = port
